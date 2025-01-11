@@ -6,27 +6,29 @@ import { currenciesStore } from "./currencyStore";
 // retrieved at different times.
 // So, I will store the latest price of each currency.
 // I hope that I do not misunderstand the problem =))
-function updateLatestPrice() {
-	// fetch prices fetch from https://interview.switcheo.com/prices.json
-	fetch("https://interview.switcheo.com/prices.json")
-		.then((response) => response.json())
-		.then((currencies) => {
-			// get the latest price of each currency
-			const latestPrices = {};
+const updateLatestPrice = () => new Promise((resolve, reject) => fetch("https://interview.switcheo.com/prices.json")
+.then((response) => response.json())
+.then((currencies) => {
+	// get the latest price of each currency
+	const latestPrices = {};
 
-			currencies.forEach((currency) => {
-				const { currency: currencyName, date, price } = currency;
-				if (!latestPrices[currencyName] || new Date(date) > new Date(latestPrices[currencyName].date)) {
-					latestPrices[currencyName] = { date, price };
-				}
-			});
+	currencies.forEach((currency) => {
+		const { currency: currencyName, date, price } = currency;
+		if (!latestPrices[currencyName] || new Date(date) > new Date(latestPrices[currencyName].date)) {
+			latestPrices[currencyName] = { date, price };
+		}
+	});
+	// store response value to currencyStore
+	Object.keys(latestPrices).forEach((currencyName) => {
+		currenciesStore.setCurrencies(currencyName, latestPrices[currencyName].price);
+	});
+	resolve();
 
-			// store response value to currencyStore
-			Object.keys(latestPrices).forEach((currencyName) => {
-				currenciesStore.setCurrencies(currencyName, latestPrices[currencyName].price);
-			});
-		});
-}
+}).catch((error) => {
+	alert('Error when fetching currencies!');
+	console.error('Error when fetching currencies:', error);
+	reject();
+}));
 
 /**
  * Swap price of original currency to target currency
@@ -39,8 +41,8 @@ export function swapPrice(originalCurrency, targetCurrency, amount) {
 	// That way, we can reduce the number of calls to the API
 	throttleFunction(updateLatestPrice, 10000);
 
-	const originalPrice = currenciesStore.getCurrencyPrice(originalCurrency) || 0;
-	const targetPrice = currenciesStore.getCurrencyPrice(targetCurrency) || 0;
+	const originalPrice = currenciesStore.getCurrencyPrice(originalCurrency) || 1;
+	const targetPrice = currenciesStore.getCurrencyPrice(targetCurrency) || 1;
 
 	return amount * targetPrice / originalPrice;
 }
