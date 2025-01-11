@@ -11,7 +11,7 @@ Hi, My name is Ly. I am applying for Frontend developer position. And this is my
 
 `npm run dev`
 
-- Note: In problem 2, I use some JS feature such as: throttle to reduce the number of API calls to fetch latest prices from server, closure to store data into memory for other usage.
++ Note: I use some JS feature such as: throttle to reduce the number of API calls to fetch latest prices from server, closure to store data into memory for other usages.
 
 ## Usage:
 - Tokens: https://github.com/Switcheo/token-icons.git
