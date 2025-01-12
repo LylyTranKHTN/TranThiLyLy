@@ -7,7 +7,9 @@ Hi, My name is Ly. I am applying for Frontend developer position. And this is my
 
 `node ./sumToN.js`
 
-- Problem2: I use Vite so the project could be run by following command line:
+- Problem2: I use Vite so the project could be run by following these command lines:
+
+`npm run install`
 
 `npm run dev`
 
