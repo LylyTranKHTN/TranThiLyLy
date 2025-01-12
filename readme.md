@@ -9,7 +9,7 @@ Hi, My name is Ly. I am applying for Frontend developer position. And this is my
 
 - Problem2: I use Vite so the project could be run by following these command lines:
 
-`npm run install`
+`npm install`
 
 `npm run dev`
 
